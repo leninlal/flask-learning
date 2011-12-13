@@ -17,6 +17,13 @@ class RegistrationForm(Form):
     password2 = PasswordField('Confirm password', validators=[Required()])
     submit = SubmitField('Register')
 
+class ChangePasswordForm(Form):
+    old_password = PasswordField('Old Password', validators=[Required()])
+    password = PasswordField("New password",validators=
+        [Required(),EqualTo("password2",message="passwords must match")])
+    password2 = PasswordField('Confirm new Password', validators=[Required()])
+    submit = SubmitField('Register')
+    
 def validate_email(self, field):
     if User.query.filter_by(email=field.data).first():
         raise ValidationError('Email already registered.')
