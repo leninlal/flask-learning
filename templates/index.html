@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% import 'macros.html' as macros %}
+{% block title %}Index{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style>
+    </style>
+{% endblock %}
+{% block page_content %}
+    {% for item in data %}
+    {{ macros.render_data(item) }}
+    {% endfor %}
+{% endblock %}
