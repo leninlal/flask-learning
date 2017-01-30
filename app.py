@@ -1,4 +1,5 @@
-from flask import Flask, request, make_response, abort, render_template, session, redirect, url_for
+from flask import Flask, request, make_response, abort, \
+                render_template, session, redirect, url_for, flash
 from flask_script import Manager
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
@@ -21,10 +22,13 @@ def user(name):
 
 @app.route("/test/form",methods=["GET","POST"])
 def render_test_form():
-    name = None
     form = NameForm()
     if form.validate_on_submit():
+        old_name = session.get('name')
+        if old_name and old_name != form.name.data:
+            flash("looks like u have changed your name")
         session['name'] = form.name.data
+        form.name.data = ''
         return redirect(url_for('render_test_form'))
     return render_template('test_form.html', form=form, name=session.get('name'))
 
