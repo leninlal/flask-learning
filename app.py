@@ -1,3 +1,5 @@
+import sys
+import os
 from flask import Flask, request, make_response, abort, \
                 render_template, session, redirect, url_for, flash
 from flask_script import Manager
@@ -6,8 +8,7 @@ from flask_moment import Moment
 from datetime import datetime
 from forms import NameForm
 from flask_sqlalchemy import SQLAlchemy
-# from models import User, Role
-
+from flask_migrate import Migrate, MigrateCommand
 
 app = Flask(__name__)
 manager = Manager(app)
@@ -19,6 +20,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://root:passme@localhost/flasky"
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 
 db = SQLAlchemy(app)
+migrate = Migrate(app,db)
+manager.add_command('db',MigrateCommand)
 
 class Role(db.Model):
     __tablename__ = "roles"
