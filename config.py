@@ -7,6 +7,8 @@ class Config:
     MYSQL_USER = os.environ.get('MYSQL_USER')
     MYSQL_PASSWORD = os.environ.get('MYSQL_PASSWORD')
     SQLALCHEMY_DATABASE_URI = "mysql://%s:%s@localhost/flasky" % (MYSQL_USER,MYSQL_PASSWORD)
+    SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
+    SENDGRID_DEFAULT_FROM = "admin@flasky.co"
     @staticmethod
     def init_app(app):
         pass
